@@ -7,26 +7,11 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-import pyttsx3
-import threading
-import time
 
 load_dotenv()
 
 inference_api_key="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"
 groq_api_key="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"
-
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice', voices[0].id)
-
-def speak_text(text):
-    engine.say(text)
-    engine.runAndWait()
-
-def speak_thread(text):
-    thread = threading.Thread(target=speak_text, args=(text,))
-    thread.start()
 
 def get_pdf_text(pdf_docs):
     text=""
@@ -36,19 +21,15 @@ def get_pdf_text(pdf_docs):
             text+= page.extract_text()
     return  text
 
-
-
 def get_text_chunks(text):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     chunks = text_splitter.split_text(text)
     return chunks
-
-
+    
 def get_vector_store(text_chunks):
     embeddings = HuggingFaceInferenceAPIEmbeddings(api_key=inference_api_key, model_name="sentence-transformers/all-MiniLM-l6-v2")
     vector_store = FAISS.from_texts(text_chunks, embedding=embeddings)
     vector_store.save_local("faiss_index")
-
 
 def get_conversational_chain():
 
@@ -85,12 +66,6 @@ def user_input(user_question):
     print(response)
     st.write(" Reply: ", response["output_text"])
 
-    speak_thread(response["output_text"])
-
-    time.sleep(2)
-
-
-
 def main():
     st.set_page_config("Chat PDF")
     st.header("Chat with PDF")
@@ -111,9 +86,5 @@ def main():
                 get_vector_store(text_chunks)
                 st.success("Done")
                 
-
-
-
-
 if __name__ == "__main__":
     main()
