@@ -14,6 +14,7 @@ import pygame
 inference_api_key="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"
 
 def text_to_speech(text):
+    pygame.init()
     tts = gTTS(text=text, lang='en')
     
     # Create a temporary file to save the audio
