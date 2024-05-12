@@ -6,4 +6,4 @@ langchain-groq
 langchain-community
 python-dotenv
 gtts
-pygame-2.5.2
+pygame
