@@ -8,3 +8,4 @@ python-dotenv
 gtts
 pygame
 playsound
+libespeak.so.1
