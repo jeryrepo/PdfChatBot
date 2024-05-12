@@ -7,7 +7,6 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-import pyttsx3
 
 load_dotenv()
 
@@ -68,18 +67,8 @@ def user_input(user_question):
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
 
-    print(response)  # Debugging line
-    
-    st.write(" Replies: ")
-    if isinstance(response["output_text"], str):
-        response_list = [response["output_text"]]
-    else:
-        response_list = response["output_text"]
-    
-    for text in response_list:
-        st.write(text)
-        # Convert text to speech for each response
-        text_to_speech(text)
+    print(response)
+    st.write(" Reply: ", response["output_text"])
 
 def main():
     st.set_page_config("Chat PDF")
