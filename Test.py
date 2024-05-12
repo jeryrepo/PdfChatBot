@@ -9,7 +9,7 @@ from langchain.prompts import PromptTemplate
 import tempfile
 from gtts import gTTS
 import os
-import playsound
+from playsound import playsound
 import pygame
 
 inference_api_key="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"
