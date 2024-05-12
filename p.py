@@ -7,16 +7,19 @@ from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
-import pyttsx3
+from gtts import gTTS
+import os
+from playsound import playsound
 
 load_dotenv()
 
 inference_api_key="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"
 
 def text_to_speech(text):
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
+    tts = gTTS(text=text, lang='en')
+    tts.save("output.mp3")
+    playsound("output.mp3")
+    os.remove("output.mp3")
 
 def get_pdf_text(pdf_docs):
     text=""
