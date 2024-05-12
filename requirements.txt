@@ -7,3 +7,4 @@ langchain-community
 python-dotenv
 gtts
 playsound
+pygame-2.5.2
