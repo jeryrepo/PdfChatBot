@@ -6,17 +6,36 @@ from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.prompts import PromptTemplate
+import tempfile
 from gtts import gTTS
 import os
-from playsound import playsound
+import pygame
 
 inference_api_key="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"
 
 def text_to_speech(text):
     tts = gTTS(text=text, lang='en')
-    tts.save("output.mp3")
-    playsound("output.mp3")
-    os.remove("output.mp3")
+    
+    # Create a temporary file to save the audio
+    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
+        temp_filename = temp_file.name
+    
+    tts.save(temp_filename)
+    
+    # Initialize pygame mixer
+    pygame.mixer.init()
+    
+    # Load the audio file
+    sound = pygame.mixer.Sound(temp_filename)
+    
+    # Play the audio file
+    sound.play()
+    
+    # Wait for the duration of the audio file
+    pygame.time.wait(int(sound.get_length() * 1000))  # Convert to milliseconds
+    
+    # Clean up - remove the temporary audio file
+    os.remove(temp_filename)
 
 def get_pdf_text(pdf_docs):
     text=""
