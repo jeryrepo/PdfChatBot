@@ -5,6 +5,4 @@ langchain
 langchain-groq
 langchain-community
 python-dotenv
-gtts
-pygame
-playsound
+pyttsx3
