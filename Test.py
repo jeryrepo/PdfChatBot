@@ -15,29 +15,11 @@ import pygame
 inference_api_key="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"
 
 def text_to_speech(text):
-    pygame.init()
     tts = gTTS(text=text, lang='en')
-    
-    # Create a temporary file to save the audio
-    with tempfile.NamedTemporaryFile(suffix=".mp3", delete=False) as temp_file:
-        temp_filename = temp_file.name
-    
+    audio_file = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False)
+    temp_filename = audio_file.name
     tts.save(temp_filename)
-    
-    # Initialize pygame mixer
-    pygame.mixer.init()
-    
-    # Load the audio file
-    sound = pygame.mixer.Sound(temp_filename)
-    
-    # Play the audio file
-    sound.play()
-    
-    # Wait for the duration of the audio file
-    pygame.time.wait(int(sound.get_length() * 1000))  # Convert to milliseconds
-    
-    # Clean up - remove the temporary audio file
-    os.remove(temp_filename)
+    st.audio(temp_filename, format='audio/mp3')
 
 def get_pdf_text(pdf_docs):
     text=""
