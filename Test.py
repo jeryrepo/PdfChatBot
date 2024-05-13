@@ -18,6 +18,7 @@ def text_to_speech(text):
     temp_filename = audio_file.name
     tts.save(temp_filename)
     st.audio(temp_filename, format='audio/mp3')
+    os.remove(temp_filename)
 
 def get_pdf_text(pdf_docs):
     text=""
