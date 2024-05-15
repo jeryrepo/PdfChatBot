@@ -10,7 +10,7 @@ import tempfile
 from gtts import gTTS
 import os
 
-inference_api_key="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"
+inference_api_key=""
 
 def text_to_speech(text):
     tts = gTTS(text=text, lang='en')
@@ -49,7 +49,7 @@ def get_conversational_chain():
     Answer:
     """
 
-    model = ChatGroq(temperature=0,groq_api_key="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", model_name="llama3-8b-8192")
+    model = ChatGroq(temperature=0,groq_api_key="", model_name="llama3-8b-8192")
 
     prompt = PromptTemplate(template = prompt_template, input_variables = ["context", "question"])
     chain = load_qa_chain(model, chain_type="stuff", prompt=prompt)
